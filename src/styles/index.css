@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900;&display=swap");
+
+@layer base {
+  html {
+    font-family: Poppins, system-ui, sans-serif;
+    background-color: #FFFFFF !important;
+  }
+  body {
+    height: 100vh !important;
+    width: 100vw !important;
+    padding: 0;
+    margin: 0;
+    background-color: #FFFFFF !important;
+    overflow-x: hidden;
+  }
+}
