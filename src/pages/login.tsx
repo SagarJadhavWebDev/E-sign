@@ -21,9 +21,9 @@ const Login: React.FC<loginProps> = ({}) => {
       className="h-full duration-500  hover:ease-in-out
      transform border
        rounded-3xl shadow-xl
-     grid md:grid-cols-2 md:m-20 m-10  overflow-hidden "
+     grid md:grid-cols-2 md:m-20 m-6  overflow-hidden "
     >
-      <div className="col-6 p-10  ">
+      <div className="col-6 md:p-10 p-5 ">
         <p className="text-4xl md:text-start  mx-5 text-indigo-600 font-bold ">
           Sign Up
         </p>
@@ -33,12 +33,12 @@ const Login: React.FC<loginProps> = ({}) => {
             Sign up with
           </span>
         </div>
-        <div className="grid md:grid-cols-2   md:text-start gap-5">
+        <div className="grid md:grid-cols-2 text-center   md:text-start gap-5">
           <div className="">
             <button
               className="border outline-none   justify-evenly p-4 
              inline-flex items-center rounded-xl shadow-sm
-              w-5/6 hover:shadow-xl transition-shadow  transition-all "
+              md:w-5/6 w-full hover:shadow-xl transition-shadow  transition-all "
             >
               <img
                 className="object-fit w-5"
@@ -53,7 +53,7 @@ const Login: React.FC<loginProps> = ({}) => {
             <button
               className="border outline-none   justify-evenly p-4 
               inline-flex items-center rounded-xl shadow-sm
-               w-5/6 hover:shadow-xl transition-shadow  transition-all "
+              md:w-5/6 w-full hover:shadow-xl transition-shadow  transition-all "
             >
               <img
                 className="object-fit w-5"
@@ -74,7 +74,7 @@ const Login: React.FC<loginProps> = ({}) => {
               name="name"
               required
               type="text"
-              className="p-3  hover:shadow-xl transition-shadow transition-all my-2 bg-indigo-20 w-5/6 outline-none border rounded-lg  drop-shadow-sm"
+              className="p-3  hover:shadow-xl transition-shadow transition-all my-2 bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
               placeholder="Enter Your Name"
             />
           </div>
@@ -87,7 +87,7 @@ const Login: React.FC<loginProps> = ({}) => {
               name="email"
               required
               type="email"
-              className="p-3 my-2 hover:shadow-xl transition-shadow transition-all bg-indigo-20 w-5/6 outline-none border rounded-lg  drop-shadow-sm"
+              className="p-3 my-2 hover:shadow-xl transition-shadow transition-all bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
               placeholder="Enter Your Email"
             />
           </div>
@@ -117,7 +117,7 @@ const Login: React.FC<loginProps> = ({}) => {
             </span>
           </div>
         </div>
-        <div className="hover:scale-110 cursor-pointer duration-500 trasition-all  bg-red-600 mt-6 mb-7 p-4 justify-center items-center text-center shadow-red-600  flex w-16 h-16 rounded-2xl shadow-2xl">
+        <div className="hover:scale-110 cursor-pointer duration-500 trasition-all  bg-red-600 mt-8 md:mt-6 mb-7 p-4 justify-center items-center text-center shadow-red-600  flex w-16 h-16 rounded-2xl shadow-2xl">
           <svg
             version="1.1"
             id="Layer_1"
@@ -151,7 +151,7 @@ const Login: React.FC<loginProps> = ({}) => {
             <g></g>
           </svg>
         </div>
-        <div className=" text-sm flex">
+        <div className="mx-2 text-sm flex">
           <p className="text-gray-600 font-medium">Already have an account ?</p>
           <span className="text-red-600 mx-2 font-medium cursor-pointer">
             Sign in
@@ -159,7 +159,7 @@ const Login: React.FC<loginProps> = ({}) => {
         </div>
       </div>
 
-      <div className="col-6  flex flex-cloumn justify-center rounded-xl items-center text-center">
+      <div className="col-6 hidden md:flex flex-cloumn justify-center rounded-xl items-center text-center">
         <img
           className="hover:animate-bounce  trasition-all duration-900"
           src={ImageConstants.SignupImage}
