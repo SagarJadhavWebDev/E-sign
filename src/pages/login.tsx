@@ -24,16 +24,14 @@ const Login: React.FC<loginProps> = ({}) => {
      grid md:grid-cols-2 md:m-20 m-6  overflow-hidden "
     >
       <div className="col-6 md:p-10 p-5 ">
-        <p className="text-4xl md:text-start  mx-5 text-indigo-600 font-bold ">
-          Sign Up
-        </p>
+        <p className="text-4xl  mx-5 text-indigo-600 font-bold ">Sign Up</p>
         <div className="flex  my-10 mx-0">
           <hr className="text-red-300 my-3  bg-red-300 font-extrabold w-14" />
           <span className="mx-5 text-sm text-red-500 font-bold">
             Sign up with
           </span>
         </div>
-        <div className="grid md:grid-cols-2 text-center   md:text-start gap-5">
+        <div className="grid md:grid-cols-2  md:text-start    gap-5">
           <div className="">
             <button
               className="border outline-none   justify-evenly p-4 
