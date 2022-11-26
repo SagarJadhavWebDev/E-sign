@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default withPrivateRoute(Home);
+export default Home;

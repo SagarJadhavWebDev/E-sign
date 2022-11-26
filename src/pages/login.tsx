@@ -1,10 +1,15 @@
 import ImageConstants from "@/constants/ImageConstants";
+import routes from "@/constants/routes";
+import onLoginFaild from "@/utils/google/onLoginFaild";
+import onLoginSuccess from "@/utils/google/onLoginSuccess";
 import React from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useGoogleLogin } from "react-google-login";
 interface loginProps {}
 const Login: React.FC<loginProps> = ({}) => {
   const scrollRef = useRef();
+
   useEffect(() => {
     if (scrollRef) {
       //@ts-ignore
@@ -15,28 +20,40 @@ const Login: React.FC<loginProps> = ({}) => {
       });
     }
   }, []);
+
+  const { signIn } = useGoogleLogin({
+    onSuccess: onLoginSuccess,
+    onFailure: onLoginFaild,
+    clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    cookiePolicy: "single_host_origin",
+    accessType: "online",
+    isSignedIn: true,
+  });
   return (
     <div
       ref={scrollRef}
       className="h-full duration-500  hover:ease-in-out
      transform border
-       rounded-3xl shadow-xl
-     grid md:grid-cols-2 md:m-20 m-6  overflow-hidden "
+       rounded-3xl shadow-2xl
+     grid md:grid-cols-2 md:m-20  m-6  overflow-hidden "
     >
       <div className="col-6 md:p-10 p-5 ">
-        <p className="text-4xl  mx-5 text-indigo-600 font-bold ">Sign Up</p>
-        <div className="flex  my-10 mx-0">
-          <hr className="text-red-300 my-3  bg-red-300 font-extrabold w-14" />
-          <span className="mx-5 text-sm text-red-500 font-bold">
+        <p className="text-4xl  mx-5 text-red-600 font-bold ">Sign Up</p>
+        <div className="flex  my-10 mx-1">
+          <hr className="text-red-300 my-3.5 border border-red-500 bg-red-300 font-extrabold w-14" />
+          <span className="mx-2 text-sm text-red-500 font-bold">
             Sign up with
           </span>
         </div>
         <div className="grid md:grid-cols-2  md:text-start    gap-5">
           <div className="">
             <button
+              onClick={() => {
+                signIn();
+              }}
               className="border outline-none   justify-evenly p-4 
              inline-flex items-center rounded-xl shadow-sm
-              md:w-5/6 w-full hover:shadow-xl transition-shadow  transition-all "
+              md:w-5/6 w-full hover:shadow-xl transition-shadow duration-500   transition-all "
             >
               <img
                 className="object-fit w-5"
@@ -51,7 +68,7 @@ const Login: React.FC<loginProps> = ({}) => {
             <button
               className="border outline-none   justify-evenly p-4 
               inline-flex items-center rounded-xl shadow-sm
-              md:w-5/6 w-full hover:shadow-xl transition-shadow  transition-all "
+              md:w-5/6 w-full hover:shadow-xl transition-shadow  duration-500  transition-all "
             >
               <img
                 className="object-fit w-5"
@@ -62,6 +79,9 @@ const Login: React.FC<loginProps> = ({}) => {
               </span>
             </button>
           </div>
+          <p className="m-auto md:hidden flex  font-medium text-medium text-gray-500">
+            OR
+          </p>
         </div>
         <div className="grid  my-4 mt-5 grid-cols-1 md:grid-cols-2 gap-5">
           <div className="text-start grid">
@@ -72,7 +92,7 @@ const Login: React.FC<loginProps> = ({}) => {
               name="name"
               required
               type="text"
-              className="p-3  hover:shadow-xl transition-shadow transition-all my-2 bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
+              className="p-3  hover:shadow-xl duration-500  transition-shadow transition-all my-2 bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
               placeholder="Enter Your Name"
             />
           </div>
@@ -85,12 +105,12 @@ const Login: React.FC<loginProps> = ({}) => {
               name="email"
               required
               type="email"
-              className="p-3 my-2 hover:shadow-xl transition-shadow transition-all bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
+              className="p-3 my-2 hover:shadow-xl duration-500  transition-shadow transition-all bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
               placeholder="Enter Your Email"
             />
           </div>
         </div>
-        <div className="grid my-6 grid-cols-1 gap-5">
+        <div className="grid my-3 grid-cols-1 gap-5">
           <label className="text-gray-600 mx-2 text-sm font-medium">
             Password
           </label>
@@ -98,24 +118,24 @@ const Login: React.FC<loginProps> = ({}) => {
             name="email"
             required
             type="password"
-            className="p-3   relative hover:shadow-xl transition-shadow transition-all bg-indigo-20 outline-none border rounded-lg  drop-shadow-sm"
+            className="p-3   relative hover:shadow-xl duration-700 transition-shadow transition-all bg-indigo-20 outline-none border rounded-lg  drop-shadow-sm"
             placeholder="*******"
           />
         </div>
-        <div className=" justify-between  flex mx-1 ">
-          <div className="grow-0 mr-3 md:mr-0  m-auto  justify-center flex-cloumn items-center text-center">
+        <div className="  mt-7  flex mx-1 ">
+          <div className="grow-0 mr-3 md:mr-1   justify-center flex-cloumn items-center text-center">
             <input
               type="checkbox"
               className="p-2 w-5 h-5 trasition-all cursor-pointer text-blue-600 bg-gray-100 rounded-3xl border-gray-300 "
             />
           </div>
-          <div className="grow md:flex cursor-pointer contents text-start ">
-            <span className="md:text-sm  text-xs text-red-500 font-medium  md:mx-2 ">
+          <div className="grow md:flex w-20 cursor-pointer contents text-start ">
+            <a className="md:text-base  hover:underline  text-xs text-red-500 font-medium  md:mx-2 ">
               I've read and agree with Terms Of Service and our Privacy Policy
-            </span>
+            </a>
           </div>
         </div>
-        <div className="hover:scale-110 cursor-pointer duration-500 trasition-all  bg-red-600 mt-8 md:mt-6 mb-7 p-4 justify-center items-center text-center shadow-red-600  flex w-16 h-16 rounded-2xl shadow-2xl">
+        <div className="hover:scale-110 cursor-pointer duration-700 trasition-all  bg-red-600 mt-8 md:mt-6 mb-7 p-4 justify-center items-center text-center shadow-red-600  flex w-16 h-16 rounded-2xl shadow-2xl">
           <svg
             version="1.1"
             id="Layer_1"
@@ -149,17 +169,20 @@ const Login: React.FC<loginProps> = ({}) => {
             <g></g>
           </svg>
         </div>
-        <div className="mx-2 text-sm flex">
+        <div className="mx-2 m-auto  text-sm flex flex-column justify-start items-center">
           <p className="text-gray-600 font-medium">Already have an account ?</p>
-          <span className="text-red-600 mx-2 font-medium cursor-pointer">
+          <a
+            href={routes.login}
+            className="text-red-600 hover:shadow-2xl text-medium hover:underline mx-2 font-medium cursor-pointer"
+          >
             Sign in
-          </span>
+          </a>
         </div>
       </div>
 
       <div className="col-6 hidden md:flex flex-cloumn justify-center rounded-xl items-center text-center">
         <img
-          className="hover:animate-bounce  trasition-all duration-900"
+          className="hover:scale-90 hover:cursor-pointer  hover:drop-shadow-2xl rounded-2xl trasition-all duration-700"
           src={ImageConstants.SignupImage}
         />
       </div>
