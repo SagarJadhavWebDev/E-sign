@@ -1,10 +1,13 @@
 import ImageConstants from "@/constants/ImageConstants";
 import routes from "@/constants/routes";
 import getCookie from "@/utils/getCookie";
+import onLoginFaild from "@/utils/google/onLoginFaild";
+import onLoginSuccess from "@/utils/google/onLoginSuccess";
 import cookies from "next-cookies";
 import React, { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useGoogleLogin } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "reducers";
 import { storeUser } from "reducers/userReducer/user.action";
@@ -23,14 +26,14 @@ const Login: React.FC<loginProps> = ({}) => {
     }
   }, []);
 
-  // const { signIn } = useGoogleLogin({
-  //   onSuccess: onLoginSuccess,
-  //   onFailure: onLoginFaild,
-  //   clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  //   cookiePolicy: "single_host_origin",
-  //   accessType: "online",
-  //   isSignedIn: true,
-  // });
+  const { signIn } = useGoogleLogin({
+    onSuccess: onLoginSuccess,
+    onFailure: onLoginFaild,
+    clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    cookiePolicy: "single_host_origin",
+    accessType: "offline",
+    isSignedIn: true,
+  });
   const dispatch = useDispatch();
   const userData = useSelector((state: ApplicationState) => state.userData);
   const handleSignup = (e) => {
@@ -65,13 +68,14 @@ const Login: React.FC<loginProps> = ({}) => {
         <div className="grid md:grid-cols-2  md:text-start    gap-5">
           <div className="">
             <button
+              onClick={signIn}
               className="border outline-none   justify-evenly p-4 
              inline-flex items-center rounded-xl shadow-sm
               md:w-5/6 w-full hover:shadow-xl transition-shadow duration-500   transition-all "
             >
               <img
                 className="object-fit w-5"
-                src="https://www.svgrepo.com/show/355037/google.svg"
+                src="https:www.svgrepo.com/show/355037/google.svg"
               />
               <span className="md:text-sm text-xs font-medium text-start">
                 Sign Up With Google
