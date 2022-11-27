@@ -68,7 +68,9 @@ const Login: React.FC<loginProps> = ({}) => {
         <div className="grid md:grid-cols-2  md:text-start    gap-5">
           <div className="">
             <button
-              onClick={signIn}
+              onClick={() => {
+                signIn();
+              }}
               className="border outline-none   justify-evenly p-4 
              inline-flex items-center rounded-xl shadow-sm
               md:w-5/6 w-full hover:shadow-xl transition-shadow duration-500   transition-all "
