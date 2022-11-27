@@ -8,7 +8,8 @@
       "@/pages/*": ["pages/*"],
       "@/screens/*": ["screens/*"],
       "@/styles/*": ["styles/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/assets/*": ["assets/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -26,6 +27,11 @@
     "jsx": "preserve"
   },
 
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/utils/getSvgByName.js"
+  ],
   "exclude": ["node_modules"]
 }
