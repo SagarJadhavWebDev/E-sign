@@ -93,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({}) => {
 
   return (
     <aside className="w-full mt-auto h-full" aria-label="Sidebar">
-      <div className="overflow-y-auto h-full justify-center items-center text-center m-auto bg-black   ">
+      <div className="overflow-hidden h-full justify-center items-center text-center m-auto bg-black   ">
         <div className="m-0 p-0 h-screen w-full overflow-x-hidden">
           {menu.map((m: any) => {
             const isActive = router.pathname.includes(m.link);
@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({}) => {
             );
           })}
         </div>
-        <div className="text-center  hover:scale-110 w-36  transition-all duration-300  justify-center items-center my-8">
+        <div className="text-center   hover:scale-110 w-36  transition-all duration-300  justify-center items-center my-8">
           <a
             href={routes.settings}
             className={

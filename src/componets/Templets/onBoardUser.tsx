@@ -1,5 +1,6 @@
 import ImageConstants from "@/constants/ImageConstants";
 import routes from "@/constants/routes";
+import withPrivateRoute from "@/hoc/withPrivateRoute";
 import onLoginFaild from "@/utils/google/onLoginFaild";
 import { refreshTokenSetup } from "@/utils/refreshTokenSetup";
 import { useRouter } from "next/router";
@@ -53,6 +54,7 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
         meta_data: [{ dummyData: "sagar" }],
       };
       document.cookie = `user=${JSON.stringify(payload)}; path=/`;
+      document.cookie = `token=${JSON.stringify(payload)}; path=/`;
       dispatch(storeUser(payload));
       // toast.success("sagar");
       router.push(routes.home);
@@ -255,4 +257,4 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
   );
 };
 
-export default OnBoardUser;
+export default withPrivateRoute(OnBoardUser);
