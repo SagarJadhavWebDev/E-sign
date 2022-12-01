@@ -110,8 +110,8 @@ const Sidebar: React.FC<SidebarProps> = ({}) => {
                   <div
                     className={
                       !isActive
-                        ? ` hover:bg-white text-black bg-white mb-2 p-3 font-bold text-center m-auto justify-center items-center rounded-full w-14 h-14`
-                        : `bg-purple-600 text-white hover:bg-purple-700  mb-2 p-3 font-bold text-center m-auto justify-center items-center rounded-full w-14 h-14`
+                        ? ` hover:bg-white text-black bg-white mb-2 p-2 font-bold text-center m-auto justify-center items-center rounded-full w-10 h-10`
+                        : `bg-purple-600 text-white hover:bg-purple-700  mb-2 p-2 font-bold text-center m-auto justify-center items-center rounded-full w-10 h-10`
                     }
                   >
                     {m.icon}

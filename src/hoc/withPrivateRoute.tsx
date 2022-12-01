@@ -2,7 +2,6 @@ import Router from "next/router";
 import routes from "@/constants/routes";
 import cookies from "next-cookies"
 const login = routes.login;
-
 const checkUserAuthentication = (checkCookie) => {
   return {
     auth: !(checkCookie === undefined || checkCookie === null || checkCookie.length <= 0)
@@ -14,7 +13,7 @@ const withPrivateRoute = (WrappedComponent) => {
   hocComponent.getInitialProps = async (context) => {
     const authCookie = cookies(context).token;
     const userAuth = await checkUserAuthentication(authCookie);
-
+    console.log("auth",userAuth)
     // Are you an authorized user or not?
     if (!userAuth?.auth) {
       // Handle server-side and client-side rendering.

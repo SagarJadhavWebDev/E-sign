@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="md:grid overflow-hidden md:grid-cols-11 md:grid-rows-2  ">
-      <div className="box md:flex hidden row-span-5 shadow-2xl  col-span-0">
+      <div className="box md:flex hidden 5 shadow-2xl row-span-6 col-start-auto col-span-0">
         {" "}
         <Sidebar />
       </div>

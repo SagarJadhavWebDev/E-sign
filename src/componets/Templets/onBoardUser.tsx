@@ -1,15 +1,21 @@
 import ImageConstants from "@/constants/ImageConstants";
 import routes from "@/constants/routes";
 import withPrivateRoute from "@/hoc/withPrivateRoute";
-import onLoginFaild from "@/utils/google/onLoginFaild";
-import { refreshTokenSetup } from "@/utils/refreshTokenSetup";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useGoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { storeUser } from "reducers/userReducer/user.action";
+import { signIn, getCsrfToken, useSession } from "next-auth/react";
+import cookies from "next-cookies";
+import getCookie from "@/utils/getCookie";
+export interface userData {
+  name: string;
+  img: string;
+  email: string;
+  token: string;
+}
 interface OnBoardUserProps {
   type: "login" | "signup";
 }
@@ -17,6 +23,9 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
   const [terms, setTerms] = useState(true);
   const router = useRouter();
   const scrollRef = useRef();
+  const token = getCsrfToken();
+  const dispatch = useDispatch();
+  const { data: Session, status } = useSession();
   useEffect(() => {
     if (scrollRef) {
       //@ts-ignore
@@ -27,23 +36,14 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
       });
     }
   }, []);
-  const onLoginSuccess = (res) => {
-    console.log(res);
-    document.cookie = `token=${res?.tokenObj.access_token}; path=/`;
-    document.cookie = `user=${JSON.stringify(res?.profileObj)}; path=/`;
-    dispatch(storeUser(res.profileObj));
-    refreshTokenSetup(res);
-    //toast.success("sagar");
+
+  const handleLogin = (userData: userData) => {
+    document.cookie = `token=${userData?.token}; path=/`;
+    document.cookie = `user=${JSON.stringify(userData)}; path=/`;
+    dispatch(storeUser(userData.img));
     router.push(routes.home);
   };
-  const { signIn } = useGoogleLogin({
-    onSuccess: onLoginSuccess,
-    onFailure: onLoginFaild,
-    clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-    cookiePolicy: "single_host_origin",
-    accessType: "offline",
-  });
-  const dispatch = useDispatch();
+
   const handleSignup = (e) => {
     if (type === "login") {
       e.preventDefault();
@@ -56,12 +56,19 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
       document.cookie = `user=${JSON.stringify(payload)}; path=/`;
       document.cookie = `token=${JSON.stringify(payload)}; path=/`;
       dispatch(storeUser(payload));
-      // toast.success("sagar");
       router.push(routes.home);
     } else {
-      //handle signup
+      const payload = {
+        name: e.target?.name?.value,
+        email: e.target?.email?.value,
+        password: e.target?.password?.value,
+        meta_data: [{ dummyData: "sagar" }],
+      };
+      document.cookie = `user=${JSON.stringify(payload)}; path=/`;
+      document.cookie = `token=${JSON.stringify(payload)}; path=/`;
     }
   };
+
   return (
     <div
       ref={scrollRef}
@@ -85,7 +92,20 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
           <div className="">
             <button
               onClick={() => {
-                signIn();
+                signIn()
+                  .then(async (res) => {
+                    const user: userData = {
+                      name: Session?.user.name,
+                      email: Session?.user.email,
+                      img: Session?.user.image,
+                      token: await getCsrfToken(),
+                    };
+                    console.log("sagar", res);
+                    handleLogin(user);
+                  })
+                  .catch((err) => {
+                    console.log("SIGN_IN ERROR:", err);
+                  });
               }}
               className="border outline-none   justify-evenly p-4 
              inline-flex items-center rounded-xl shadow-sm
@@ -133,7 +153,7 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
                   name="name"
                   required
                   type="text"
-                  className="p-3  hover:shadow-xl duration-500  transition-shadow transition-all my-2 bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
+                  className="p-3 active:shadow-xl focus-within:shadow-xl  hover:shadow-xl duration-500  transition-shadow transition-all my-2 bg-indigo-20  md:w-5/6 w-full outline-none border rounded-lg  drop-shadow-sm"
                   placeholder="Enter Your Name"
                 />
               </div>
@@ -147,7 +167,7 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
                 name="email"
                 required
                 type="email"
-                className="p-3 my-2 hover:shadow-xl duration-500  transition-shadow bg-indigo-20  md:w-full w-full outline-none border rounded-lg  drop-shadow-sm"
+                className="p-3 active:shadow-xl focus-within:shadow-xl my-2 hover:shadow-xl duration-500  transition-shadow bg-indigo-20  md:w-full w-full outline-none border rounded-lg  drop-shadow-sm"
                 placeholder="Enter Your Email"
               />
             </div>
@@ -160,7 +180,7 @@ const OnBoardUser: React.FC<OnBoardUserProps> = ({ type }) => {
               name="password"
               required
               type="password"
-              className="p-3   relative hover:shadow-xl duration-700 transition-shadow bg-indigo-20 outline-none border rounded-lg  drop-shadow-sm"
+              className="p-3   relative hover:shadow-xl focus-within:shadow-xl duration-700 transition-shadow bg-indigo-20 outline-none border rounded-lg  drop-shadow-sm"
               placeholder="*******"
             />
           </div>

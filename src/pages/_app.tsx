@@ -1,11 +1,21 @@
 import { Provider, useStore } from "react-redux";
 import "../styles/index.css";
 import { store } from "../reduxStore";
-function MyApp({ Component, pageProps }) {
+import { SessionProvider } from "next-auth/react";
+import React from "react";
+import dynamic from "next/dynamic";
+
+function MyApp({ Component, pageProps, session }) {
   return (
-    <Provider store={store}>
-      <Component {...pageProps}></Component>
-    </Provider>
+    //@ts-ignore
+
+    <React.Suspense fallback={<div>Loading....</div>}>
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <Component {...pageProps}></Component>
+        </SessionProvider>
+      </Provider>
+    </React.Suspense>
   );
 }
 

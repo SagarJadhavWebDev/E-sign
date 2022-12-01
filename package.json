@@ -12,6 +12,7 @@
     "gapi-script": "^1.2.0",
     "lodash": "^4.17.21",
     "next": "12.1.4",
+    "next-auth": "^4.17.0",
     "next-cookies": "^2.0.3",
     "next-images": "^1.8.4",
     "next-redux-wrapper": "^8.0.0",
